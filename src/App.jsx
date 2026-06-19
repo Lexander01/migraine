@@ -36,6 +36,23 @@ function formatDateTime(ts) {
   });
 }
 
+function IconLog() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 5v14M5 12h14" />
+    </svg>
+  );
+}
+
+function IconHistory() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <polyline points="12 8 12 12 14 14" />
+      <path d="M3.05 11a9 9 0 1 1 .5 4M3 16v-5h5" />
+    </svg>
+  );
+}
+
 function EntryForm({ onSaved }) {
   const now = new Date();
   const localIso = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
@@ -97,39 +114,45 @@ function EntryForm({ onSaved }) {
         />
       </label>
 
-      <label>Duration</label>
-      <div className="duration-row">
-        <input
-          type="number"
-          min="0"
-          step="0.5"
-          placeholder="e.g. 3"
-          value={durationValue}
-          onChange={(e) => setDurationValue(e.target.value)}
-        />
-        <select
-          value={durationUnit}
-          onChange={(e) => setDurationUnit(e.target.value)}
-        >
-          {DURATION_UNITS.map((u) => (
-            <option key={u}>{u}</option>
-          ))}
-        </select>
-      </div>
+      <label>
+        Duration
+        <div className="duration-row">
+          <input
+            type="number"
+            min="0"
+            step="0.5"
+            placeholder="e.g. 3"
+            value={durationValue}
+            onChange={(e) => setDurationValue(e.target.value)}
+          />
+          <div className="select-wrapper">
+            <select
+              value={durationUnit}
+              onChange={(e) => setDurationUnit(e.target.value)}
+            >
+              {DURATION_UNITS.map((u) => (
+                <option key={u}>{u}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </label>
 
-      <label>Triggers</label>
-      <div className="trigger-grid">
-        {COMMON_TRIGGERS.map((t) => (
-          <button
-            key={t}
-            type="button"
-            className={`trigger-chip ${triggers.includes(t) ? "selected" : ""}`}
-            onClick={() => toggleTrigger(t)}
-          >
-            {t}
-          </button>
-        ))}
-      </div>
+      <label>
+        Triggers
+        <div className="trigger-grid">
+          {COMMON_TRIGGERS.map((t) => (
+            <button
+              key={t}
+              type="button"
+              className={`trigger-chip ${triggers.includes(t) ? "selected" : ""}`}
+              onClick={() => toggleTrigger(t)}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+      </label>
 
       <label>
         Notes
@@ -158,7 +181,7 @@ function EntryCard({ entry, onDelete }) {
       <div className="entry-header">
         <span className="entry-date">{formatDateTime(entry.startedAt)}</span>
         {!confirming ? (
-          <button className="delete-btn" onClick={() => setConfirming(true)}>
+          <button className="delete-btn" onClick={() => setConfirming(true)} aria-label="Delete">
             ✕
           </button>
         ) : (
@@ -221,20 +244,6 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <h1>Migraine Tracker</h1>
-        <nav>
-          <button
-            className={view === "log" ? "nav-active" : ""}
-            onClick={() => setView("log")}
-          >
-            Log
-          </button>
-          <button
-            className={view === "history" ? "nav-active" : ""}
-            onClick={() => setView("history")}
-          >
-            History{entries.length > 0 ? ` (${entries.length})` : ""}
-          </button>
-        </nav>
       </header>
 
       <main>
@@ -255,6 +264,23 @@ export default function App() {
           </section>
         )}
       </main>
+
+      <nav className="bottom-nav">
+        <button
+          className={view === "log" ? "nav-active" : ""}
+          onClick={() => setView("log")}
+        >
+          <IconLog />
+          Log
+        </button>
+        <button
+          className={view === "history" ? "nav-active" : ""}
+          onClick={() => setView("history")}
+        >
+          <IconHistory />
+          History{entries.length > 0 ? ` (${entries.length})` : ""}
+        </button>
+      </nav>
     </div>
   );
 }
