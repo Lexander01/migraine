@@ -4,12 +4,12 @@ import { getFirestore } from "firebase/firestore";
 // Replace these values with your Firebase project config
 // Firebase Console → Project Settings → Your apps → SDK setup and configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyB_YkpHuv-yhGkJEgen_cGiMYY2oIwy3Uo",
+  authDomain: "migraine-a7e75.firebaseapp.com",
+  projectId: "migraine-a7e75",
+  storageBucket: "migraine-a7e75.firebasestorage.app",
+  messagingSenderId: "1080343115807",
+  appId: "1:1080343115807:web:a62b15e4e6b54b8383fd2a",
 };
 
 const app = initializeApp(firebaseConfig);
